@@ -90,34 +90,43 @@ namespace Lab5
             int[,] answer = null;
 
             // code here
-            int min = 0;
-            if (matrix.GetLength(0) == 0 || matrix.GetLength(0) == 1)
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            if (rows == 0)
             {
-                return new int[0, matrix.GetLength(1)];
+                return new int[0, cols];
             }
-            for (int i = 0; i < matrix.GetLength(0); i++)
+
+            int minRow = 0;
+            int minValue = matrix[0, 0];
+            for (int i = 1; i < rows; i++)
             {
-                if (matrix[i, 0] < matrix[min, 0])
+                if (matrix[i, 0] < minValue)
                 {
-                    min = i;
+                    minValue = matrix[i, 0];
+                    minRow = i;
                 }
             }
-            for (int i = 0; i < matrix.GetLength(0) - 1; i++)
+
+            if (rows == 1)
             {
-                if (i < min)
+                return new int[0, cols];
+            }
+
+            answer = new int[rows - 1, cols];
+            int targetRow = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                if (i == minRow)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
-                        answer[i, j] = matrix[i, j];
-                    }
+                    continue;
                 }
-                else
+
+                for (int j = 0; j < cols; j++)
                 {
-                    for (int j = 0; j < matrix.GetLength(1); j++)
-                    {
-                        answer[i, j] = matrix[i + 1, j];
-                    }
+                    answer[targetRow, j] = matrix[i, j];
                 }
+                targetRow++;
             }
 
             // end
@@ -422,3 +431,4 @@ namespace Lab5
     }
 
 }
+
